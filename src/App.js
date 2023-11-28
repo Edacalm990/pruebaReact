@@ -1,25 +1,49 @@
-import logo from './logo.svg';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Component, useState } from 'react';
 
-function App() {
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      boton:0,
+    };
+  }
+  add() {
+    let r=this.state.boton+1;
+    this.setState({boton:r});
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <h2>{this.state.boton}</h2>
+          <Botoncillo click={()=>this.add()}></Botoncillo>
+          <Botoncillo click={()=>this.add()}></Botoncillo>
+          <Botoncillo click={()=>this.add()}></Botoncillo>
+          <Botoncillo click={()=>this.add()}></Botoncillo>
+          <Botoncillo click={()=>this.add()}></Botoncillo>
+        </header>
+      </div>
+    );
+  }
+}
+function Botoncillo(props) {
+  const [pulsado, setpulsado] = useState(false);
+  const [color, setColor] = useState('secondary')
+  let clase='btn btn-'+color;
+  function pulsar(){
+    if(!pulsado) {
+      props.click();
+      setColor('danger');
+    }
+    setpulsado(true);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <button type='button' className={clase} onClick={()=>pulsar()}></button>
   );
 }
-
 export default App;
+
